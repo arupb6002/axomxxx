@@ -379,21 +379,24 @@ async function loadVideos(){
         </div>
         `;
 
-        const res =
-        await fetch(sheetURL);
+        const res = await fetch(sheetURL);
 
-        const text =
-        await res.text();
+const text = await res.text();
 
-        // Proper Google Sheet JSON extraction
-        const jsonText =
-        text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/)[1];
+const start =
+text.indexOf("{");
 
-        const data =
-        JSON.parse(jsonText);
+const end =
+text.lastIndexOf("}");
 
-        const rows =
-        data.table.rows;
+const jsonText =
+text.substring(start, end + 1);
+
+const data =
+JSON.parse(jsonText);
+
+const rows =
+data.table.rows;
 
         feed.innerHTML = "";
 
