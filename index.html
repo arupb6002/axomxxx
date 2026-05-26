@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AXOM XXX</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -22,10 +24,12 @@ body{
     font-family:'Poppins',sans-serif;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .header{
-    background:#001d77;
+    background:#001c7a;
     padding:25px 15px;
     text-align:center;
 }
@@ -37,58 +41,75 @@ body{
 }
 
 .subtitle{
-    margin-top:5px;
+    margin-top:8px;
     font-size:18px;
 }
 
-/* MENU */
+/* =========================
+   MENU
+========================= */
 
 .menu{
     display:flex;
-    gap:10px;
     justify-content:center;
-    padding:20px 10px;
+    gap:12px;
     flex-wrap:wrap;
+    padding:20px 12px;
 }
 
 .menu button{
-    background:#7d0000;
+    background:#8b0000;
     color:#fff;
     border:none;
-    padding:14px 18px;
-    font-weight:700;
-    font-size:18px;
     border-radius:8px;
+    padding:14px 22px;
+    font-size:18px;
+    font-weight:700;
     cursor:pointer;
 }
 
-/* FEED */
+/* =========================
+   FEED
+========================= */
 
 .feed{
-    padding:10px;
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:12px;
+    padding:12px;
 }
 
 .card{
     background:#111;
-    border:1px solid #222;
-    overflow:hidden;
     border-radius:8px;
+    overflow:hidden;
     cursor:pointer;
+    border:1px solid #222;
 }
 
 .thumb{
     position:relative;
+    width:100%;
     aspect-ratio:16/10;
-    overflow:hidden;
+    background:#222;
 }
 
 .thumb img{
     width:100%;
     height:100%;
     object-fit:cover;
+}
+
+.paid{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background:#ffcc00;
+    color:#000;
+    font-size:13px;
+    font-weight:700;
+    padding:4px 8px;
+    border-radius:5px;
 }
 
 .duration{
@@ -102,35 +123,25 @@ body{
     font-weight:600;
 }
 
-.paid{
-    position:absolute;
-    top:8px;
-    left:8px;
-    background:#ffc400;
-    color:#000;
-    font-size:13px;
-    font-weight:700;
-    padding:4px 8px;
-    border-radius:5px;
-}
-
 .info{
     padding:10px;
 }
 
 .title{
-    font-size:17px;
+    font-size:16px;
     font-weight:600;
-    line-height:1.3;
+    line-height:1.4;
 }
 
 .meta{
     margin-top:6px;
     color:#999;
-    font-size:14px;
+    font-size:13px;
 }
 
-/* PLAYER PAGE */
+/* =========================
+   PLAYER PAGE
+========================= */
 
 .playerPage{
     display:none;
@@ -140,9 +151,9 @@ body{
 .videoContainer{
     position:relative;
     width:100%;
-    border-radius:10px;
-    overflow:hidden;
     background:#000;
+    border-radius:12px;
+    overflow:hidden;
 }
 
 video{
@@ -151,7 +162,9 @@ video{
     background:#000;
 }
 
-/* CUSTOM CONTROLS */
+/* =========================
+   CONTROLS
+========================= */
 
 .controls{
     position:absolute;
@@ -159,7 +172,7 @@ video{
     left:0;
     width:100%;
     padding:15px;
-    background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
+    background:linear-gradient(to top, rgba(0,0,0,.9), transparent);
     display:flex;
     align-items:center;
     gap:12px;
@@ -185,8 +198,8 @@ video{
 .progress{
     flex:1;
     height:5px;
-    background:#444;
-    border-radius:20px;
+    background:#555;
+    border-radius:50px;
     overflow:hidden;
 }
 
@@ -196,41 +209,66 @@ video{
     background:#fff;
 }
 
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    text-align:center;
+    padding:50px;
+    font-size:22px;
+}
+
+.error{
+    text-align:center;
+    padding:50px;
+    color:red;
+    font-size:22px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
 .bigText{
     text-align:center;
     padding:40px 20px;
 }
 
 .bigText h1{
-    font-size:40px;
-    margin-bottom:15px;
+    font-size:42px;
+    line-height:1.3;
 }
 
 .joinBtn{
     display:inline-block;
     margin-top:20px;
-    background:#00b300;
+    background:#00aa00;
     color:#fff;
     text-decoration:none;
     padding:14px 30px;
-    font-size:28px;
     border-radius:10px;
+    font-size:28px;
     font-weight:700;
 }
 
 .footer{
-    background:#7d0000;
-    text-align:center;
+    background:#8b0000;
     padding:20px;
+    text-align:center;
     margin-top:40px;
     font-size:20px;
     line-height:1.5;
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:700px){
 
     .logo{
-        font-size:48px;
+        font-size:50px;
     }
 
     .feed{
@@ -238,72 +276,120 @@ video{
     }
 
     .title{
-        font-size:15px;
+        font-size:14px;
     }
 
 }
 
 </style>
+
 </head>
+
 <body>
 
-<!-- HOME PAGE -->
+<!-- =========================
+     HOME PAGE
+========================= -->
 
 <div id="homePage">
 
     <div class="header">
-        <div class="logo">AXOM XXX</div>
-        <div class="subtitle">Live From Sivasagar Assam</div>
+
+        <div class="logo">
+            AXOM XXX
+        </div>
+
+        <div class="subtitle">
+            Live From Sivasagar Assam
+        </div>
+
     </div>
 
     <div class="menu">
+
         <button>BOOK GIFTS</button>
+
         <button>NEW VIDEOS</button>
+
         <button>PREMIUM VIDEOS</button>
+
     </div>
 
-    <div class="feed" id="feed"></div>
+    <div class="feed" id="feed">
+
+        <div class="loading">
+            Loading Videos...
+        </div>
+
+    </div>
 
     <div class="bigText">
-        <h1>We Are Designing the Website.</h1>
+
+        <h1>
+            We Are Designing the Website.
+        </h1>
+
+        <br>
+
         <h1>❤️</h1>
 
-        <h1 style="font-size:28px;">
+        <br>
+
+        <h1 style="font-size:30px;">
             Love From Sivasagar,<br>
             Joi Aai Axom
         </h1>
+
     </div>
 
     <div class="footer">
+
         © 2026 Axom Xxx, All Rights Reserved.<br>
         Made With BDS
+
     </div>
 
 </div>
 
-<!-- PLAYER PAGE -->
+<!-- =========================
+     PLAYER PAGE
+========================= -->
 
 <div class="playerPage" id="playerPage">
 
     <div class="header">
-        <div class="logo">AXOM XXX</div>
-        <div class="subtitle">Live From Sivasagar Assam</div>
+
+        <div class="logo">
+            AXOM XXX
+        </div>
+
+        <div class="subtitle">
+            Live From Sivasagar Assam
+        </div>
+
     </div>
 
     <br>
 
     <div class="videoContainer" id="videoContainer">
 
-        <video id="videoPlayer"></video>
+        <video
+            id="videoPlayer"
+            playsinline
+            webkit-playsinline
+        ></video>
 
         <div class="controls" id="controls">
 
-            <button class="control-btn" id="playPauseBtn">
+            <button class="control-btn"
+                    id="playPauseBtn">
                 ▶
             </button>
 
             <div class="progress">
+
                 <div id="progressBar"></div>
+
             </div>
 
         </div>
@@ -312,32 +398,48 @@ video{
 
     <div class="bigText">
 
-        <a class="joinBtn" href="#">
+        <a href="#"
+           class="joinBtn">
             Join Channel
         </a>
 
         <br><br>
 
         <h1 style="text-align:left;">
+
             Live Up,<br>
+
             Made With ❤️ in<br>
+
             Sivasagar<br>
+
             joi aai Axom
+
         </h1>
 
     </div>
 
     <div class="footer">
+
         © 2026 Axom Xxx, All Rights Reserved.<br>
         Made With BDS
+
     </div>
 
 </div>
 
 <script>
 
+/* =========================
+   GOOGLE SHEET JSON URL
+========================= */
+
 const sheetURL =
-'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2bImE9nH6VisUqTn3NS2devbrtZ3sz8TEHsLvt55lIqY3wEsVAozPwHJEXTN2Awlq5YPlkqvPus4X/gviz/tq?tqx=out:json';
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vR2bImE9nH6VisUqTn3NS2devbrtZ3sz8TEHsLvt55lIqY3wEsVAozPwHJEXTN2Awlq5YPlkqvPus4X/gviz/tq?tqx=out:json";
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const feed =
 document.getElementById("feed");
@@ -368,35 +470,26 @@ async function loadVideos(){
 
     try{
 
-        feed.innerHTML = `
-        <div style="
-            color:white;
-            text-align:center;
-            padding:40px;
-            font-size:22px;
-        ">
-            Loading Videos...
-        </div>
-        `;
+        const response =
+        await fetch(sheetURL);
 
-        const res = await fetch(sheetURL);
+        const text =
+        await response.text();
 
-const text = await res.text();
+        const start =
+        text.indexOf("{");
 
-const start =
-text.indexOf("{");
+        const end =
+        text.lastIndexOf("}");
 
-const end =
-text.lastIndexOf("}");
+        const jsonText =
+        text.substring(start,end+1);
 
-const jsonText =
-text.substring(start, end + 1);
+        const data =
+        JSON.parse(jsonText);
 
-const data =
-JSON.parse(jsonText);
-
-const rows =
-data.table.rows;
+        const rows =
+        data.table.rows;
 
         feed.innerHTML = "";
 
@@ -410,13 +503,13 @@ data.table.rows;
             const video =
             row.c[2]?.v || "";
 
-            const thumb =
+            let thumb =
             `https://picsum.photos/500/300?random=${index}`;
 
             feed.innerHTML += `
 
             <div class="card"
-                 onclick="openVideo('${video}')">
+                 onclick='openVideo(${JSON.stringify(video)})'>
 
                 <div class="thumb">
 
@@ -450,27 +543,23 @@ data.table.rows;
 
         });
 
-    }catch(err){
+    }catch(error){
 
-        console.log(err);
+        console.log(error);
 
         feed.innerHTML = `
-        <div style="
-            color:red;
-            text-align:center;
-            padding:40px;
-        ">
+
+        <div class="error">
+
             Failed To Load Videos
+
         </div>
+
         `;
 
     }
 
 }
-
-/* =========================
-   START
-========================= */
 
 loadVideos();
 
@@ -487,7 +576,8 @@ function convertDriveLink(url){
 
         if(match){
 
-            return `https://drive.google.com/uc?export=view&id=${match[0]}`;
+            return
+            `https://drive.google.com/uc?export=download&id=${match[0]}`;
 
         }
 
@@ -503,7 +593,8 @@ function convertDriveLink(url){
 
 function openVideo(url){
 
-    url = convertDriveLink(url);
+    url =
+    convertDriveLink(url);
 
     homePage.style.display =
     "none";
@@ -511,7 +602,8 @@ function openVideo(url){
     playerPage.style.display =
     "block";
 
-    videoPlayer.src = url;
+    videoPlayer.src =
+    url;
 
     videoPlayer.load();
 
@@ -527,7 +619,7 @@ function openVideo(url){
 }
 
 /* =========================
-   PLAY PAUSE
+   PLAY / PAUSE
 ========================= */
 
 playPauseBtn.addEventListener(
@@ -556,25 +648,20 @@ playPauseBtn.addEventListener(
 );
 
 /* =========================
-   PROGRESS BAR
+   VIDEO CLICK
 ========================= */
 
-videoPlayer.addEventListener(
-    "timeupdate",
+videoContainer.addEventListener(
+    "click",
     ()=>{
 
-        const percent =
-        (videoPlayer.currentTime /
-        videoPlayer.duration) * 100;
-
-        progressBar.style.width =
-        percent + "%";
+        showControls();
 
     }
 );
 
 /* =========================
-   SHOW CONTROLS
+   AUTO HIDE CONTROLS
 ========================= */
 
 let hideTimer;
@@ -597,9 +684,42 @@ function showControls(){
 
 }
 
-videoContainer.addEventListener(
-    "click",
-    showControls
+/* =========================
+   PROGRESS BAR
+========================= */
+
+videoPlayer.addEventListener(
+    "timeupdate",
+    ()=>{
+
+        if(videoPlayer.duration){
+
+            const percent =
+            (videoPlayer.currentTime /
+            videoPlayer.duration) * 100;
+
+            progressBar.style.width =
+            percent + "%";
+
+        }
+
+    }
+);
+
+/* =========================
+   VIDEO END
+========================= */
+
+videoPlayer.addEventListener(
+    "ended",
+    ()=>{
+
+        playPauseBtn.innerHTML =
+        "▶";
+
+        showControls();
+
+    }
 );
 
 </script>
