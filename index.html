@@ -1,728 +1,834 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>AXOM XXX | Premium Assamese Content</title>
+    <!-- Google Fonts + modern font stack -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free CDN for crisp icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        body {
+            background: #0a0a0a;
+            color: #ededed;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
 
-<title>AXOM XXX</title>
+        /* modern scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c0392b;
+            border-radius: 10px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        /* premium glassmorphic header */
+        .header {
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 24px 24px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
 
-<style>
+        .logo {
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFFFFF 30%, #e0a800 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        .subtitle {
+            font-size: 14px;
+            letter-spacing: 0.8px;
+            color: #b0b0b0;
+            margin-top: 8px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
 
-body{
-    background:#000;
-    color:#fff;
-    font-family:'Poppins',sans-serif;
-}
+        /* menu buttons — premium dark */
+        .menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 28px 20px 20px 20px;
+            background: #0a0a0a;
+        }
 
-/* =========================
-   HEADER
-========================= */
+        .menu button {
+            background: rgba(20, 20, 30, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f5f5f7;
+            border-radius: 60px;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+        }
 
-.header{
-    background:#001c7a;
-    padding:25px 15px;
-    text-align:center;
-}
+        .menu button:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(192, 57, 43, 0.3);
+        }
 
-.logo{
-    font-size:60px;
-    font-weight:800;
-    letter-spacing:3px;
-}
+        /* premium feed grid */
+        .feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 20px 24px 48px 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
 
-.subtitle{
-    margin-top:8px;
-    font-size:18px;
-}
+        /* card modern */
+        .card {
+            background: #111111;
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
 
-/* =========================
-   MENU
-========================= */
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(192, 57, 43, 0.5);
+            box-shadow: 0 20px 32px -12px rgba(0, 0, 0, 0.8);
+        }
 
-.menu{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-    padding:20px 12px;
-}
+        .thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0f0f0f;
+            overflow: hidden;
+        }
 
-.menu button{
-    background:#8b0000;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:14px 22px;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-}
+        .thumb video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
 
-/* =========================
-   FEED
-========================= */
+        .card:hover .thumb video {
+            transform: scale(1.02);
+        }
 
-.feed{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    padding:12px;
-}
+        .paid {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(192, 57, 43, 0.95);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px black;
+        }
 
-.card{
-    background:#111;
-    border-radius:8px;
-    overflow:hidden;
-    cursor:pointer;
-    border:1px solid #222;
-}
+        .duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffd966;
+        }
 
-.thumb{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/10;
-    background:#222;
-}
+        .info {
+            padding: 16px;
+        }
 
-.thumb img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
+        .title {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #fff;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
-.paid{
-    position:absolute;
-    top:8px;
-    left:8px;
-    background:#ffcc00;
-    color:#000;
-    font-size:13px;
-    font-weight:700;
-    padding:4px 8px;
-    border-radius:5px;
-}
+        .meta {
+            margin-top: 8px;
+            color: #aaa;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.duration{
-    position:absolute;
-    bottom:8px;
-    right:8px;
-    background:rgba(0,0,0,.7);
-    padding:4px 8px;
-    border-radius:4px;
-    font-size:13px;
-    font-weight:600;
-}
+        .meta i {
+            font-size: 12px;
+            color: #c0392b;
+        }
 
-.info{
-    padding:10px;
-}
+        /* ----- PLAYER PAGE (premium theater) ----- */
+        .playerPage {
+            display: none;
+            background: #050505;
+        }
 
-.title{
-    font-size:16px;
-    font-weight:600;
-    line-height:1.4;
-}
+        .videoContainer {
+            position: relative;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -12px black;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
-.meta{
-    margin-top:6px;
-    color:#999;
-    font-size:13px;
-}
+        #videoPlayer {
+            width: 100%;
+            display: block;
+            background: #000;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+        }
 
-/* =========================
-   PLAYER PAGE
-========================= */
+        /* fullscreen mode overrides */
+        #videoPlayer:fullscreen {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            background: black;
+        }
+        
+        .videoContainer:fullscreen {
+            max-width: none;
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .videoContainer:fullscreen #videoPlayer {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-.playerPage{
-    display:none;
-    padding:15px;
-}
+        /* custom sleek controls */
+        .controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
 
-.videoContainer{
-    position:relative;
-    width:100%;
-    background:#000;
-    border-radius:12px;
-    overflow:hidden;
-}
+        .videoContainer.show-controls .controls {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-video{
-    width:100%;
-    display:block;
-    background:#000;
-}
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
 
-/* =========================
-   CONTROLS
-========================= */
+        .control-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
 
-.controls{
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    padding:15px;
-    background:linear-gradient(to top, rgba(0,0,0,.9), transparent);
-    display:flex;
-    align-items:center;
-    gap:12px;
-    opacity:0;
-    transition:.3s;
-}
+        .progress {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            cursor: pointer;
+            overflow: hidden;
+        }
 
-.videoContainer.show-controls .controls{
-    opacity:1;
-}
+        .progress div {
+            width: 0%;
+            height: 100%;
+            background: #c0392b;
+            border-radius: 20px;
+        }
 
-.control-btn{
-    width:45px;
-    height:45px;
-    border:none;
-    border-radius:50%;
-    background:rgba(255,255,255,.2);
-    color:#fff;
-    font-size:18px;
-    cursor:pointer;
-}
+        /* premium text sections */
+        .bigText {
+            text-align: center;
+            padding: 60px 24px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-.progress{
-    flex:1;
-    height:5px;
-    background:#555;
-    border-radius:50px;
-    overflow:hidden;
-}
+        .bigText h1 {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ffffff, #cfcfcf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-.progress div{
-    width:0%;
-    height:100%;
-    background:#fff;
-}
+        .joinBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(95deg, #c0392b 0%, #e67e22 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 38px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 12px 22px -8px rgba(192, 57, 43, 0.4);
+            transition: 0.2s;
+            border: none;
+        }
 
-/* =========================
-   LOADING
-========================= */
+        .joinBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 28px -8px rgba(192, 57, 43, 0.6);
+        }
 
-.loading{
-    text-align:center;
-    padding:50px;
-    font-size:22px;
-}
+        .footer {
+            background: #0a0a0a;
+            padding: 32px 24px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 0.3px;
+        }
 
-.error{
-    text-align:center;
-    padding:50px;
-    color:red;
-    font-size:22px;
-}
+        .loading, .error {
+            text-align: center;
+            padding: 70px 20px;
+            font-size: 18px;
+            background: #0e0e0e;
+            border-radius: 32px;
+            margin: 20px;
+        }
 
-/* =========================
-   FOOTER
-========================= */
+        .error {
+            color: #e67e22;
+            border: 1px dashed #e67e22;
+        }
 
-.bigText{
-    text-align:center;
-    padding:40px 20px;
-}
+        /* responsive extra */
+        @media (max-width: 640px) {
+            .feed {
+                gap: 16px;
+                padding: 16px;
+            }
+            .logo {
+                font-size: 32px;
+            }
+            .bigText h1 {
+                font-size: 28px;
+            }
+            .menu button {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+            .controls {
+                padding: 12px 16px;
+            }
+            .control-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+        }
 
-.bigText h1{
-    font-size:42px;
-    line-height:1.3;
-}
-
-.joinBtn{
-    display:inline-block;
-    margin-top:20px;
-    background:#00aa00;
-    color:#fff;
-    text-decoration:none;
-    padding:14px 30px;
-    border-radius:10px;
-    font-size:28px;
-    font-weight:700;
-}
-
-.footer{
-    background:#8b0000;
-    padding:20px;
-    text-align:center;
-    margin-top:40px;
-    font-size:20px;
-    line-height:1.5;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:700px){
-
-    .logo{
-        font-size:50px;
-    }
-
-    .feed{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .title{
-        font-size:14px;
-    }
-
-}
-
-</style>
-
+        /* back button simulation */
+        .back-home {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 28px;
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            z-index: 200;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .back-home:hover {
+            background: #c0392b;
+            transform: scale(1.02);
+        }
+        .back-home i {
+            font-size: 22px;
+        }
+        
+        /* fullscreen button specific icon */
+        .fullscreen-icon {
+            font-size: 18px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- =========================
-     HOME PAGE
-========================= -->
-
+<!-- HOME PAGE -->
 <div id="homePage">
-
     <div class="header">
-
-        <div class="logo">
-            AXOM XXX
-        </div>
-
-        <div class="subtitle">
-            Live From Sivasagar Assam
-        </div>
-
+        <div class="logo">AXOM XXX</div>
+        <div class="subtitle">LIVE FROM SIVASAGAR | ASSAM'S PREMIUM</div>
     </div>
-
     <div class="menu">
-
-        <button>BOOK GIFTS</button>
-
-        <button>NEW VIDEOS</button>
-
-        <button>PREMIUM VIDEOS</button>
-
+        <button id="bookGiftsBtn"><i class="fas fa-gift" style="margin-right: 8px;"></i> BOOK GIFTS</button>
+        <button id="newVideosBtn"><i class="fas fa-fire"></i> NEW VIDEOS</button>
+        <button id="premiumBtn"><i class="fas fa-crown"></i> PREMIUM VIDEOS</button>
     </div>
-
     <div class="feed" id="feed">
-
-        <div class="loading">
-            Loading Videos...
-        </div>
-
+        <div class="loading"><i class="fas fa-spinner fa-pulse"></i> Loading exclusive content...</div>
     </div>
-
     <div class="bigText">
-
-        <h1>
-            We Are Designing the Website.
-        </h1>
-
+        <h1>We Are Designing the Future.</h1>
         <br>
-
         <h1>❤️</h1>
-
         <br>
-
-        <h1 style="font-size:30px;">
-            Love From Sivasagar,<br>
-            Joi Aai Axom
-        </h1>
-
+        <h1 style="font-size:28px; background: none; color:#ccc;">Love From Sivasagar,<br> Joi Aai Axom</h1>
     </div>
-
     <div class="footer">
-
-        © 2026 Axom Xxx, All Rights Reserved.<br>
-        Made With BDS
-
+        <i class="far fa-copyright"></i> 2026 AXOM XXX — All Rights Reserved.<br>Made With ❤️ in Assam | BDS
     </div>
-
 </div>
 
-<!-- =========================
-     PLAYER PAGE
-========================= -->
-
+<!-- PLAYER PAGE -->
 <div class="playerPage" id="playerPage">
-
-    <div class="header">
-
-        <div class="logo">
-            AXOM XXX
-        </div>
-
-        <div class="subtitle">
-            Live From Sivasagar Assam
-        </div>
-
+    <div class="header" style="position: relative;">
+        <div class="logo">AXOM XXX</div>
+        <div class="subtitle">PREMIUM PLAYER</div>
     </div>
-
-    <br>
-
-    <div class="videoContainer" id="videoContainer">
-
-        <video
-            id="videoPlayer"
-            playsinline
-            webkit-playsinline
-        ></video>
-
-        <div class="controls" id="controls">
-
-            <button class="control-btn"
-                    id="playPauseBtn">
-                ▶
-            </button>
-
-            <div class="progress">
-
-                <div id="progressBar"></div>
-
+    <button class="back-home" id="backHomeBtn"><i class="fas fa-arrow-left"></i></button>
+    <div style="padding: 20px 18px 20px 18px; max-width: 1300px; margin:0 auto;">
+        <div class="videoContainer" id="videoContainer">
+            <video id="videoPlayer" playsinline webkit-playsinline preload="metadata"></video>
+            <div class="controls">
+                <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+                <div class="progress" id="progressWrapper">
+                    <div id="progressBar"></div>
+                </div>
+                <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand fullscreen-icon"></i></button>
             </div>
-
         </div>
-
+        <div class="bigText" style="padding-top: 40px;">
+            <a href="#" class="joinBtn" id="joinChannelBtn"><i class="fab fa-telegram-plane"></i> Join Channel</a>
+            <br><br>
+            <h1 style="text-align:left; font-size: 26px;">Live Up,<br> Made With ❤️ in Sivasagar<br> Joi Aai Axom</h1>
+        </div>
     </div>
-
-    <div class="bigText">
-
-        <a href="#"
-           class="joinBtn">
-            Join Channel
-        </a>
-
-        <br><br>
-
-        <h1 style="text-align:left;">
-
-            Live Up,<br>
-
-            Made With ❤️ in<br>
-
-            Sivasagar<br>
-
-            joi aai Axom
-
-        </h1>
-
-    </div>
-
     <div class="footer">
-
-        © 2026 Axom Xxx, All Rights Reserved.<br>
-        Made With BDS
-
+        <i class="far fa-copyright"></i> 2026 Axom Xxx, All Rights Reserved.<br>Made With BDS | Premium Streaming
     </div>
-
 </div>
 
 <script>
+    /* ------------------------------------------------------
+       PROFESSIONAL SHEET CONFIG - CSV FROM GOOGLE SHEETS
+       FULLSCREEN BUTTON FULLY INTEGRATED
+    -------------------------------------------------------- */
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRm4m47UY9Mx_ieC9hvVfgQFAVuV0cI0dBsCRVqiFXXbjh6MvPfwy41EprWotRwxIMlhH8WXTBPxzd7/pub?output=csv";
 
-/* =========================
-   GOOGLE SHEET JSON URL
-========================= */
+    // DOM elements
+    const feedContainer = document.getElementById("feed");
+    const homePageDiv = document.getElementById("homePage");
+    const playerPageDiv = document.getElementById("playerPage");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const progressBarFill = document.getElementById("progressBar");
+    const videoContainer = document.getElementById("videoContainer");
+    const progressWrapper = document.getElementById("progressWrapper");
+    const backBtn = document.getElementById("backHomeBtn");
+    const joinBtn = document.getElementById("joinChannelBtn");
+    const bookGifts = document.getElementById("bookGiftsBtn");
+    const newVideosBtn = document.getElementById("newVideosBtn");
+    const premiumMenuBtn = document.getElementById("premiumBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
 
-const sheetURL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vR2bImE9nH6VisUqTn3NS2devbrtZ3sz8TEHsLvt55lIqY3wEsVAozPwHJEXTN2Awlq5YPlkqvPus4X/gviz/tq?tqx=out:json";
+    let videosCatalog = [];   // array of {title, video}
+    let currentVideoIndex = 0;
 
-/* =========================
-   ELEMENTS
-========================= */
+    // --- improved CSV parser (handles quotes, commas inside fields) ---
+    function parseCSVRow(rowStr) {
+        const result = [];
+        let inQuote = false;
+        let current = "";
+        for (let i = 0; i < rowStr.length; i++) {
+            const char = rowStr[i];
+            if (char === '"') {
+                inQuote = !inQuote;
+            } else if (char === ',' && !inQuote) {
+                result.push(current.trim());
+                current = "";
+            } else {
+                current += char;
+            }
+        }
+        result.push(current.trim());
+        return result;
+    }
 
-const feed =
-document.getElementById("feed");
+    function parseCSVToVideos(csvText) {
+        const lines = csvText.split(/\r?\n/).filter(l => l.trim().length > 0);
+        if (lines.length < 2) return [];
+        const videoList = [];
+        // start from row 1 (skip header)
+        for (let i = 1; i < lines.length; i++) {
+            const columns = parseCSVRow(lines[i]);
+            if (columns.length >= 3) {
+                let title = columns[1] ? columns[1].trim() : "Untitled";
+                let videoUrl = columns[2] ? columns[2].trim() : "";
+                if (videoUrl && (videoUrl.startsWith("http://") || videoUrl.startsWith("https://"))) {
+                    videoList.push({ title: title, video: videoUrl });
+                }
+            }
+        }
+        return videoList.reverse(); // newest first
+    }
 
-const homePage =
-document.getElementById("homePage");
+    // load from Google Sheets
+    async function loadVideosFromSheets() {
+        try {
+            feedContainer.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-pulse"></i> Fetching latest premium videos ...</div>`;
+            const response = await fetch(SHEET_CSV_URL);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const csvData = await response.text();
+            videosCatalog = parseCSVToVideos(csvData);
+            if (videosCatalog.length === 0) {
+                feedContainer.innerHTML = `<div class="error"><i class="fas fa-exclamation-triangle"></i> No videos found. Add data to sheet or check CSV structure.<br><small>Columns: ID, Title, VideoURL</small></div>`;
+            } else {
+                renderPremiumFeed(videosCatalog);
+            }
+        } catch (err) {
+            console.error(err);
+            feedContainer.innerHTML = `<div class="error"><i class="fas fa-cloud-download-alt"></i> Failed to load videos.<br><small>Check sheet publish settings / network</small></div>`;
+        }
+    }
 
-const playerPage =
-document.getElementById("playerPage");
-
-const videoPlayer =
-document.getElementById("videoPlayer");
-
-const playPauseBtn =
-document.getElementById("playPauseBtn");
-
-const progressBar =
-document.getElementById("progressBar");
-
-const videoContainer =
-document.getElementById("videoContainer");
-
-/* =========================
-   LOAD VIDEOS
-========================= */
-
-async function loadVideos(){
-
-    try{
-
-        const response =
-        await fetch(sheetURL);
-
-        const text =
-        await response.text();
-
-        const start =
-        text.indexOf("{");
-
-        const end =
-        text.lastIndexOf("}");
-
-        const jsonText =
-        text.substring(start,end+1);
-
-        const data =
-        JSON.parse(jsonText);
-
-        const rows =
-        data.table.rows;
-
-        feed.innerHTML = "";
-
-        rows.reverse();
-
-        rows.forEach((row,index)=>{
-
-            const title =
-            row.c[1]?.v || "Untitled";
-
-            const video =
-            row.c[2]?.v || "";
-
-            let thumb =
-            `https://picsum.photos/500/300?random=${index}`;
-
-            feed.innerHTML += `
-
-            <div class="card"
-                 onclick='openVideo(${JSON.stringify(video)})'>
-
+    // render feed with elegant cards
+    function renderPremiumFeed(videosArray) {
+        feedContainer.innerHTML = "";
+        if (!videosArray.length) {
+            feedContainer.innerHTML = `<div class="error">No videos available right now.</div>`;
+            return;
+        }
+        videosArray.forEach((videoObj, idx) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.setAttribute("data-index", idx);
+            // thumbnail video preview with #t=1 second
+            const thumbSrc = `${videoObj.video}#t=1`;
+            card.innerHTML = `
                 <div class="thumb">
-
-                    <img src="${thumb}">
-
-                    <div class="paid">
-                        Paid
-                    </div>
-
-                    <div class="duration">
-                        HD
-                    </div>
-
+                    <video src="${escapeHtml(thumbSrc)}" muted preload="metadata"></video>
+                    <div class="paid"><i class="fas fa-lock"></i> EXCLUSIVE</div>
+                    <div class="duration"><i class="fas fa-hd"></i> HD</div>
                 </div>
-
                 <div class="info">
-
-                    <div class="title">
-                        ${title}
-                    </div>
-
-                    <div class="meta">
-                        AXOM XXX • New Video
-                    </div>
-
+                    <div class="title">${escapeHtml(videoObj.title)}</div>
+                    <div class="meta"><i class="fas fa-video"></i> AXOM XXX • Premium Release</div>
                 </div>
-
-            </div>
-
             `;
-
+            card.addEventListener("click", (e) => {
+                e.stopPropagation();
+                openVideoPlayer(idx);
+            });
+            feedContainer.appendChild(card);
         });
-
-    }catch(error){
-
-        console.log(error);
-
-        feed.innerHTML = `
-
-        <div class="error">
-
-            Failed To Load Videos
-
-        </div>
-
-        `;
-
     }
 
-}
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
 
-loadVideos();
-
-/* =========================
-   GOOGLE DRIVE FIX
-========================= */
-
-function convertDriveLink(url){
-
-    if(url.includes("drive.google.com")){
-
-        const match =
-        url.match(/[-\w]{25,}/);
-
-        if(match){
-
-            return
-            `https://drive.google.com/uc?export=download&id=${match[0]}`;
-
+    // ---- FULLSCREEN FUNCTIONALITY (Professional) ----
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            // Enter fullscreen on the video container
+            if (videoContainer.requestFullscreen) {
+                videoContainer.requestFullscreen().catch(err => {
+                    console.warn(`Fullscreen error: ${err.message}`);
+                });
+            } else if (videoContainer.webkitRequestFullscreen) {
+                videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) {
+                videoContainer.msRequestFullscreen();
+            }
+            // update icon later via fullscreenchange event
+        } else {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         }
-
+    }
+    
+    // Update fullscreen button icon based on state
+    function updateFullscreenIcon() {
+        if (document.fullscreenElement) {
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress fullscreen-icon"></i>';
+        } else {
+            fullscreenBtn.innerHTML = '<i class="fas fa-expand fullscreen-icon"></i>';
+        }
+        // small trick to refresh controls visibility
+        if (videoContainer) {
+            videoContainer.classList.add("show-controls");
+            setTimeout(() => {
+                if (!videoContainer.matches(':hover')) {
+                    setTimeout(() => {
+                        if (!document.fullscreenElement) videoContainer.classList.remove("show-controls");
+                    }, 2500);
+                }
+            }, 100);
+        }
+    }
+    
+    // Listen for fullscreen changes
+    document.addEventListener('fullscreenchange', updateFullscreenIcon);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+    document.addEventListener('msfullscreenchange', updateFullscreenIcon);
+    
+    // ---- OPEN VIDEO PLAYER ----
+    function openVideoPlayer(index) {
+        if (!videosCatalog[index]) return;
+        currentVideoIndex = index;
+        const videoItem = videosCatalog[index];
+        // set source and load
+        videoPlayer.src = videoItem.video;
+        videoPlayer.load();
+        videoPlayer.play().catch(e => console.log("autoplay blocked", e));
+        // update play button icon
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        // switch UI
+        homePageDiv.style.display = "none";
+        playerPageDiv.style.display = "block";
+        window.scrollTo(0, 0);
+        showControlsTemporarily();
+        // reset progress bar
+        progressBarFill.style.width = "0%";
     }
 
-    return url;
+    // ---- Controls logic ----
+    let controlsTimeout;
+    function showControlsTemporarily() {
+        videoContainer.classList.add("show-controls");
+        if (controlsTimeout) clearTimeout(controlsTimeout);
+        controlsTimeout = setTimeout(() => {
+            if (!document.fullscreenElement) {
+                videoContainer.classList.remove("show-controls");
+            } else {
+                // if fullscreen, keep visible a bit longer and then hide if no hover
+                setTimeout(() => {
+                    if (!videoContainer.matches(':hover') && document.fullscreenElement) {
+                        videoContainer.classList.remove("show-controls");
+                    }
+                }, 2000);
+            }
+        }, 2800);
+    }
 
-}
+    videoContainer.addEventListener("click", () => {
+        showControlsTemporarily();
+    });
 
-/* =========================
-   OPEN VIDEO
-========================= */
-
-function openVideo(url){
-
-    url =
-    convertDriveLink(url);
-
-    homePage.style.display =
-    "none";
-
-    playerPage.style.display =
-    "block";
-
-    videoPlayer.src =
-    url;
-
-    videoPlayer.load();
-
-    videoPlayer.play();
-
-    playPauseBtn.innerHTML =
-    "❚❚";
-
-    showControls();
-
-    window.scrollTo(0,0);
-
-}
-
-/* =========================
-   PLAY / PAUSE
-========================= */
-
-playPauseBtn.addEventListener(
-    "click",
-    ()=>{
-
-        if(videoPlayer.paused){
-
+    // play/pause
+    playPauseBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (videoPlayer.paused) {
             videoPlayer.play();
-
-            playPauseBtn.innerHTML =
-            "❚❚";
-
-        }else{
-
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
             videoPlayer.pause();
-
-            playPauseBtn.innerHTML =
-            "▶";
-
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         }
+        showControlsTemporarily();
+    });
 
-        showControls();
-
-    }
-);
-
-/* =========================
-   VIDEO CLICK
-========================= */
-
-videoContainer.addEventListener(
-    "click",
-    ()=>{
-
-        showControls();
-
-    }
-);
-
-/* =========================
-   AUTO HIDE CONTROLS
-========================= */
-
-let hideTimer;
-
-function showControls(){
-
-    videoContainer.classList.add(
-        "show-controls"
-    );
-
-    clearTimeout(hideTimer);
-
-    hideTimer = setTimeout(()=>{
-
-        videoContainer.classList.remove(
-            "show-controls"
-        );
-
-    },3000);
-
-}
-
-/* =========================
-   PROGRESS BAR
-========================= */
-
-videoPlayer.addEventListener(
-    "timeupdate",
-    ()=>{
-
-        if(videoPlayer.duration){
-
-            const percent =
-            (videoPlayer.currentTime /
-            videoPlayer.duration) * 100;
-
-            progressBar.style.width =
-            percent + "%";
-
+    // update progress bar
+    videoPlayer.addEventListener("timeupdate", () => {
+        if (videoPlayer.duration && isFinite(videoPlayer.duration)) {
+            const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
+            progressBarFill.style.width = percent + "%";
         }
+    });
 
+    videoPlayer.addEventListener("ended", () => {
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        showControlsTemporarily();
+    });
+
+    // seeking
+    if (progressWrapper) {
+        progressWrapper.addEventListener("click", (e) => {
+            const rect = progressWrapper.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const seekPercent = clickX / width;
+            if (videoPlayer.duration) {
+                videoPlayer.currentTime = seekPercent * videoPlayer.duration;
+            }
+            showControlsTemporarily();
+        });
     }
-);
 
-/* =========================
-   VIDEO END
-========================= */
+    // back to home
+    backBtn.addEventListener("click", () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+        videoPlayer.pause();
+        playerPageDiv.style.display = "none";
+        homePageDiv.style.display = "block";
+        videoPlayer.src = "";
+        window.scrollTo(0, 0);
+    });
 
-videoPlayer.addEventListener(
-    "ended",
-    ()=>{
+    // join channel alert or interaction (professional)
+    joinBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("✨ Join our exclusive channel on Telegram / WhatsApp\nContact: support@axomxxx.com (Coming Soon)");
+    });
 
-        playPauseBtn.innerHTML =
-        "▶";
+    // FULLSCREEN BUTTON EVENT
+    fullscreenBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleFullscreen();
+        showControlsTemporarily();
+    });
 
-        showControls();
+    // bonus interactive menu buttons (just modern UX)
+    bookGifts.addEventListener("click", () => {
+        alert("🎁 Gifts & Premium Offers: DM on Instagram @axomxxx (Coming Soon)");
+    });
+    newVideosBtn.addEventListener("click", () => {
+        if (videosCatalog.length) {
+            renderPremiumFeed(videosCatalog);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            alert("Refresh feed — new videos appear daily!");
+        }
+    });
+    premiumMenuBtn.addEventListener("click", () => {
+        alert("🔥 PREMIUM ACCESS: Unlock all HD videos, early releases & exclusive BTS. Subscribe soon.");
+    });
 
+    // optional: auto hide for mouse idle on container
+    let idleTimer;
+    function resetIdle() {
+        if (!playerPageDiv || playerPageDiv.style.display !== "block") return;
+        showControlsTemporarily();
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+            if (videoContainer && !videoContainer.matches(':hover') && !document.fullscreenElement) {
+                videoContainer.classList.remove("show-controls");
+            } else if (videoContainer && !videoContainer.matches(':hover') && document.fullscreenElement) {
+                videoContainer.classList.remove("show-controls");
+            }
+        }, 4000);
     }
-);
+    if (videoContainer) {
+        videoContainer.addEventListener("mousemove", resetIdle);
+        videoContainer.addEventListener("touchstart", resetIdle);
+    }
+    
+    // ensure that when exiting fullscreen, controls UI is consistent
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            videoContainer.classList.remove("show-controls");
+            setTimeout(() => {
+                if (playerPageDiv.style.display === "block") {
+                    showControlsTemporarily();
+                }
+            }, 100);
+        } else {
+            showControlsTemporarily();
+        }
+    });
 
+    // --- load data on start
+    loadVideosFromSheets();
 </script>
-
 </body>
 </html>
