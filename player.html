@@ -29,7 +29,14 @@
             overflow-x: hidden;
         }
 
-        /* premium header */
+        /* hide scrollbar in fullscreen */
+        body:fullscreen {
+            overflow: hidden;
+        }
+        body:-webkit-full-screen {
+            overflow: hidden;
+        }
+
         .header {
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(18px);
@@ -40,6 +47,13 @@
             top: 0;
             z-index: 100;
             width: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        /* hide header in fullscreen */
+        body:fullscreen .header,
+        body:-webkit-full-screen .header {
+            display: none;
         }
 
         .logo {
@@ -59,11 +73,17 @@
             margin-top: 4px;
         }
 
-        /* main video player container */
         .player-wrapper {
             max-width: 1400px;
             margin: 0 auto;
             padding: 16px;
+        }
+
+        /* fullscreen ke liye wrapper hide */
+        body:fullscreen .player-wrapper,
+        body:-webkit-full-screen .player-wrapper {
+            padding: 0;
+            max-width: none;
         }
 
         .video-container {
@@ -76,6 +96,29 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* fullscreen container */
+        .video-container:fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            border-radius: 0 !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #000 !important;
+            z-index: 9999;
+        }
+
+        .video-container:-webkit-full-screen {
+            width: 100vw !important;
+            height: 100vh !important;
+            border-radius: 0 !important;
+        }
+
         #videoPlayer {
             width: 100%;
             display: block;
@@ -85,24 +128,14 @@
             cursor: pointer;
         }
 
-        /* fullscreen mode */
-        #videoPlayer:fullscreen {
-            width: 100vw;
-            height: 100vh;
-            object-fit: contain;
+        /* fullscreen mein video poora screen cover karega */
+        .video-container:fullscreen #videoPlayer {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            aspect-ratio: unset;
         }
 
-        .video-container:fullscreen {
-            max-width: none;
-            width: 100vw;
-            height: 100vh;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* premium controls overlay */
         .controls {
             position: absolute;
             bottom: 0;
@@ -116,6 +149,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            z-index: 30;
         }
 
         .video-container.show-controls .controls {
@@ -128,7 +162,7 @@
             height: 44px;
             border: none;
             border-radius: 60px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
             color: white;
             font-size: 18px;
@@ -171,7 +205,6 @@
             font-family: monospace;
         }
 
-        /* double tap feedback toast */
         .seek-toast {
             position: fixed;
             bottom: 30%;
@@ -193,7 +226,6 @@
             font-family: monospace;
         }
 
-        /* back button + info */
         .nav-bar {
             display: flex;
             align-items: center;
@@ -203,6 +235,13 @@
             backdrop-filter: blur(12px);
             margin-bottom: 12px;
             border-radius: 60px;
+            transition: opacity 0.3s;
+        }
+
+        /* fullscreen mein nav-bar hide */
+        body:fullscreen .nav-bar,
+        body:-webkit-full-screen .nav-bar {
+            display: none;
         }
 
         .back-home-btn {
@@ -263,6 +302,12 @@
             color: #666;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 30px;
+            transition: opacity 0.3s;
+        }
+
+        body:fullscreen .footer,
+        body:-webkit-full-screen .footer {
+            display: none;
         }
 
         @media (max-width: 700px) {
@@ -343,11 +388,9 @@
 
 <script>
     /* ---------------------------------------------------------
-       PLAYER PAGE - standalone with double tap (±10 sec)
-       Gets video info from URL parameters
+       PLAYER PAGE - FULLSCREEN FIX + DOUBLE TAP SEEK (±10 sec)
     --------------------------------------------------------- */
     
-    // DOM elements
     const videoPlayer = document.getElementById("videoPlayer");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const progressBarFill = document.getElementById("progressBar");
@@ -366,30 +409,24 @@
     let videoTitle = urlParams.get("title") || "AXOM XXX Exclusive";
 
     if (!videoSrc) {
-        // fallback demo or error message
         videoTitle = "Sample - Premium Content";
         videoSrc = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
-        // show error softly? but still functional
         console.warn("No video src provided, using demo.");
     }
 
-    // decode URL-encoded title and src
     videoSrc = decodeURIComponent(videoSrc);
     videoTitle = decodeURIComponent(videoTitle);
     videoTitleSpan.textContent = videoTitle;
     document.title = `${videoTitle} | AXOM XXX Player`;
 
-    // load video
     videoPlayer.src = videoSrc;
     videoPlayer.load();
     
-    // auto play attempt
-    videoPlayer.play().catch(e => console.log("autoplay blocked, user interaction needed"));
+    videoPlayer.play().catch(e => console.log("autoplay blocked"));
 
-    // update play button
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 
-    // ========== DOUBLE TAP SEEK LOGIC (±10 sec) ==========
+    // ========== DOUBLE TAP SEEK (±10 sec) ==========
     let lastTap = 0;
     let tapTimeout = null;
 
@@ -406,34 +443,29 @@
     }
 
     videoPlayer.addEventListener("click", (e) => {
-        // prevent conflict with controls
         const rect = videoPlayer.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
         const videoWidth = rect.width;
         const currentTimeNow = Date.now();
         const tapGap = currentTimeNow - lastTap;
         
-        if (tapGap < 300 && tapGap > 30) {  // double tap detected
+        if (tapGap < 300 && tapGap > 30) {
             e.stopPropagation();
-            // Determine left side (< 40% width) or right side (> 60% width)
             const isLeftSide = clickX < videoWidth * 0.4;
             const isRightSide = clickX > videoWidth * 0.6;
             
             if (isLeftSide) {
-                // seek backward 10 seconds
                 let newTime = videoPlayer.currentTime - 10;
                 if (newTime < 0) newTime = 0;
                 videoPlayer.currentTime = newTime;
                 showSeekToast(10, 'back');
             } 
             else if (isRightSide) {
-                // seek forward 10 seconds
                 let newTime = videoPlayer.currentTime + 10;
                 if (videoPlayer.duration && newTime > videoPlayer.duration) newTime = videoPlayer.duration;
                 videoPlayer.currentTime = newTime;
                 showSeekToast(10, 'forward');
             }
-            // if middle zone, ignore double tap seeking (to not interrupt)
             lastTap = 0;
             clearTimeout(tapTimeout);
             return;
@@ -445,18 +477,15 @@
             lastTap = 0;
         }, 300);
         
-        // just normal click to show controls (no seek)
         showControlsTemporarily();
     });
     
-    // also prevent propagation from container to avoid double interference
     videoContainer.addEventListener("click", (e) => {
-        // if click is on video player itself? handled inside videoPlayer click
         if (e.target === videoPlayer) return;
         showControlsTemporarily();
     });
 
-    // ========== CONTROLS & PROGRESS ==========
+    // ========== CONTROLS ==========
     let controlsTimeout;
 
     function showControlsTemporarily() {
@@ -465,12 +494,6 @@
         controlsTimeout = setTimeout(() => {
             if (!document.fullscreenElement) {
                 videoContainer.classList.remove("show-controls");
-            } else {
-                setTimeout(() => {
-                    if (!videoContainer.matches(':hover') && document.fullscreenElement) {
-                        videoContainer.classList.remove("show-controls");
-                    }
-                }, 2000);
             }
         }, 2800);
     }
@@ -478,7 +501,6 @@
     videoContainer.addEventListener("mousemove", showControlsTemporarily);
     videoContainer.addEventListener("touchstart", showControlsTemporarily);
 
-    // play/pause
     playPauseBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         if (videoPlayer.paused) {
@@ -491,7 +513,6 @@
         showControlsTemporarily();
     });
 
-    // update progress bar + time display
     function formatTime(seconds) {
         if (isNaN(seconds)) return "0:00";
         const hrs = Math.floor(seconds / 3600);
@@ -507,11 +528,7 @@
         if (videoPlayer.duration && isFinite(videoPlayer.duration)) {
             const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
             progressBarFill.style.width = percent + "%";
-            const currentFormatted = formatTime(videoPlayer.currentTime);
-            const durationFormatted = formatTime(videoPlayer.duration);
-            timeDisplaySpan.textContent = `${currentFormatted} / ${durationFormatted}`;
-        } else {
-            timeDisplaySpan.textContent = `0:00 / live`;
+            timeDisplaySpan.textContent = `${formatTime(videoPlayer.currentTime)} / ${formatTime(videoPlayer.duration)}`;
         }
     });
 
@@ -520,7 +537,6 @@
         showControlsTemporarily();
     });
 
-    // seeking via progress bar
     if (progressWrapper) {
         progressWrapper.addEventListener("click", (e) => {
             const rect = progressWrapper.getBoundingClientRect();
@@ -534,26 +550,49 @@
         });
     }
 
-    // fullscreen handling
+    // ========== FULLSCREEN FIXED ==========
     function toggleFullscreen() {
+        const container = videoContainer;
+        
         if (!document.fullscreenElement) {
-            if (videoContainer.requestFullscreen) {
-                videoContainer.requestFullscreen().catch(err => console.warn(err));
-            } else if (videoContainer.webkitRequestFullscreen) {
-                videoContainer.webkitRequestFullscreen();
+            // Enter fullscreen on container
+            if (container.requestFullscreen) {
+                container.requestFullscreen().catch(err => {
+                    console.warn(`Fullscreen error: ${err.message}`);
+                    // fallback: try on video element
+                    if (videoPlayer.requestFullscreen) {
+                        videoPlayer.requestFullscreen();
+                    }
+                });
+            } else if (container.webkitRequestFullscreen) {
+                container.webkitRequestFullscreen();
+            } else if (container.msRequestFullscreen) {
+                container.msRequestFullscreen();
             }
         } else {
-            if (document.exitFullscreen) document.exitFullscreen();
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
         }
     }
 
     function updateFullscreenIcon() {
         if (document.fullscreenElement) {
             fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            // fullscreen mein controls thoda der dikhao
+            videoContainer.classList.add("show-controls");
+            setTimeout(() => {
+                if (!videoContainer.matches(':hover')) {
+                    videoContainer.classList.remove("show-controls");
+                }
+            }, 3000);
         } else {
             fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            showControlsTemporarily();
         }
-        showControlsTemporarily();
     }
 
     fullscreenBtn.addEventListener("click", (e) => {
@@ -564,24 +603,26 @@
 
     document.addEventListener('fullscreenchange', updateFullscreenIcon);
     document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+    document.addEventListener('mozfullscreenchange', updateFullscreenIcon);
 
-    // back button: redirect to index.html (homepage)
     backBtn.addEventListener("click", () => {
-        if (document.fullscreenElement) document.exitFullscreen();
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
         window.location.href = "index.html";
     });
 
-    // join channel popup
     joinBtn.addEventListener("click", (e) => {
         e.preventDefault();
         alert("✨ Join AXOM XXX Premium Channel\nTelegram: @axomxxx_official\nWhatsApp: +91 70000 00000 (Coming Soon)");
     });
 
-    // extra: handle video load start / show loading if needed
     let loadingIndicator = null;
     function removeLoading() {
         if (loadingIndicator && loadingIndicator.remove) loadingIndicator.remove();
+        loadingIndicator = null;
     }
+    
     videoPlayer.addEventListener("loadstart", () => {
         if (!loadingIndicator) {
             loadingIndicator = document.createElement("div");
@@ -591,26 +632,19 @@
             videoContainer.appendChild(loadingIndicator);
         }
     });
+    
     videoPlayer.addEventListener("canplay", () => {
         removeLoading();
     });
+    
     videoPlayer.addEventListener("error", () => {
         removeLoading();
         alert("Video failed to load. Please check the source or try again later.");
     });
 
-    // initial control show
     setTimeout(() => {
         showControlsTemporarily();
     }, 500);
-    
-    // store the current time in localStorage? optional resume? but we keep clean.
-    window.addEventListener("beforeunload", () => {
-        // optional nothing
-    });
-    
-    // add volume mute/unmute via keyboard? extra: but not necessary.
-    console.log("Player ready — double tap left/right to seek ±10s");
 </script>
 </body>
 </html>
